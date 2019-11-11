@@ -1,4 +1,5 @@
-
+//Node.js way of handeling req & res
+//Not part of the app! Just here as a reference.
 const httpRequest = (req, res) =>{
 
     if(req.url === '/'){
