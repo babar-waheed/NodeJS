@@ -26,7 +26,6 @@ const httpRequest = (req, res) =>{
     if(req.url === '/create-user' ){
         console.log("Create Users");
         const body = [];
-
         req.on('data', chunk => {
             console.log("chunk"+ chunk);
             body.push(chunk);
