@@ -1,0 +1,26 @@
+{
+  "name": "nodejs",
+  "version": "1.0.0",
+  "description": "Node.js Guide",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/babar-waheed/NodeJS.git"
+  },
+  "keywords": [
+    "node.js",
+    "node",
+    "js",
+    "nodejs"
+  ],
+  "author": "Babar Waheed",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/babar-waheed/NodeJS/issues"
+  },
+  "homepage": "https://github.com/babar-waheed/NodeJS#readme"
+}
