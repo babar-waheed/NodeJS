@@ -9,6 +9,7 @@ const shopRouter = require('./routes/shop');
 const adminRouter = require('./routes/admin');
 
 app.use(bodyParser.urlencoded({extended: false}));
+app.use(express.static('public'));
 
 app.use('/admin', adminRouter);
 app.use(shopRouter);
