@@ -6,7 +6,7 @@ adminRouter.get('/add-product', (req, res, next) => {
         `<html>
             <head><title>Product Page</title></head>
             <body>
-                <form method="post" action="/product">
+                <form method="post" action="/admin/add-product">
                     <input type="text" name="title" />
                     <input type="submit" value="Add Product">
                 </form>
@@ -16,7 +16,7 @@ adminRouter.get('/add-product', (req, res, next) => {
     );
 });
 
-adminRouter.post('/product', (req, res, next) => {
+adminRouter.post('/add-product', (req, res, next) => {
     console.log(req.body);
     res.redirect('/');
 })
