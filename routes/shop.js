@@ -9,7 +9,7 @@ shopRouter.get('/', (req, res, next) => {
     //res.sendFile(path.join(rootDir ,'views', 'shop.html'));\
     res.render('shop', {
         prods: products, 
-        title: 'My Shop', 
+        title: 'My Shop',  
         path: "/", 
         hasProducts: products.length > 0,
         activeShop: true,
