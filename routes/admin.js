@@ -8,7 +8,13 @@ const products = [];
 
 adminRouter.get('/add-product', (req, res, next) => {
     //res.sendFile(path.join(rootDir, 'views', 'add-product.html'));
-    res.render('add-product', {title: "Add Products!", path: "/admin/add-product"})
+    res.render('add-product', {
+        title: "Add Products!", 
+        path: "/admin/add-product",
+        formCSS: true,
+        productCSS: true,
+        activeAddProduct: true    
+    })
 });
 
 adminRouter.post('/add-product', (req, res, next) => {
