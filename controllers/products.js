@@ -12,7 +12,7 @@ exports.getAddProduct = (req, res, next) => {
 }
 
 exports.postAddProudct = (req, res, next) => {
-    console.log(req.body);
+    //console.log("getAddProduct(): req.body" + req.body);
     const products = new Product(req.body.title);
     products.save();
     res.redirect('/');
@@ -20,13 +20,16 @@ exports.postAddProudct = (req, res, next) => {
 
 exports.getShop = (req, res, next) => {
     //res.sendFile(path.join(rootDir ,'views', 'shop.html'));\
-    const products = Product.fetchAll();
-    res.render('shop', {
-        prods: products, 
-        title: 'My Shop',  
-        path: "/", 
-        hasProducts: products.length > 0,
-        activeShop: true,
-        productCSS: true
+    Product.fetchAll(products => {
+        console.log("getShop(): products" + products);
+        res.render('shop', {
+            prods: products, 
+            title: 'My Shop',  
+            path: "/", 
+            hasProducts: products.length > 0,
+            activeShop: true,
+            productCSS: true
+        });
     });
+
 }
