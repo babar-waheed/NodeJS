@@ -134,6 +134,10 @@ form {
   display: none;
 }
 
+main.center{
+  text-align: center;
+}
+
 .grid {
   display: flex;
   flex-wrap: wrap;
