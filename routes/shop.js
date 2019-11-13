@@ -3,8 +3,12 @@ const router = express.Router();
 // const path = require('path');
 // const rootDir = require('../utils/path');
 // const adminData = require('../routes/admin');
-const proudctController = require('../controllers/products');
+const shopController = require('../controllers/shop');
 
-router.get('/', proudctController.getShop);
+router.get('/', shopController.getIndex);
+router.get('/products', shopController.getProducts);
+router.get('/cart', shopController.getCart);
+router.get('/orders', shopController.getOrders); 
+router.get('/checkout', shopController.getCheckout); 
 
-module.exports = router;
+module.exports = router;   

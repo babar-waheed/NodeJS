@@ -17,8 +17,11 @@ const getProductsFromFile = cb =>{
 }
 module.exports = class Product {
 
-    constructor(title){
+    constructor(title, image, price, desc){
         this.title = title;
+        this.image = image;
+        this.price = price;
+        this.desc = desc;
     }
 
     save(){
@@ -28,7 +31,7 @@ module.exports = class Product {
             fs.writeFile(p, JSON.stringify(products), err => {
                 console.log("save():" + err);
             })
-        })  
+        }) 
     }
 
     static fetchAll(cb){
