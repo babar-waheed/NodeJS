@@ -46,3 +46,18 @@ exports.getProducts = (req, res, next) => {
         });
     });
 }
+
+exports.postEditProudct = (req, res, next) => {
+
+    console.log("req.body", req.body);
+    const id = req.body.id;
+    const title = req.body.title;
+    const image = req.body.url;
+    const price = req.body.price;
+    const desc = req.body.desc;
+
+    const products = new Product(id, title, image, price, desc);
+    products.save();
+    res.redirect('/admin/products');
+}
+
