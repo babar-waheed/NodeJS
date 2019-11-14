@@ -24,6 +24,17 @@ app.use(shopRoutes);
 app.use(errorController.get404);
 
 //sequelize relations.
+app.use((req, res, next) => {
+    User.findByPk(1)
+    .then(user => {
+        req.user = user
+        next();
+    })
+    .catch(err => {
+        console.log(err);
+    })
+});
+
 Product.belongsTo(User, {
     constrains: true,
     onDelete: 'CASCADE'
@@ -35,7 +46,18 @@ sequelize
   //.sync({force: true})
   .sync()
   .then(result => {
-    app.listen(3000); 
+      return User.findByPk(1)
+     
+  })
+  .then(user => {
+      if(!user){
+          return User.create({name: 'Babar', email: 'babar.waheed@gmail.com'})
+      }
+      return user;
+  })
+  .then(user => {
+    //console.log("USER!!!", user);
+    app.listen(3000);
   })
   .catch(err => {
       console.log(err);
