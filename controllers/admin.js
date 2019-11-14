@@ -13,7 +13,7 @@ exports.getAddProduct = (req, res, next) => {
 //Add new Proudct from the form!
 exports.postAddProudct = (req, res, next) => {
 
-    Product.create({
+    req.user.createProduct({
         title: req.body.title,
         price: req.body.price,
         description: req.body.desc,
@@ -35,7 +35,7 @@ exports.getEditProduct = (req, res, next) => {
     const editMode = req.query.edit;
     const productId = req.params.productId;
 
-    Product.findAll({where: {id: productId}})
+    req.user.getProducts({where: {id: productId}})
         .then(products =>{
             console.log("getEditProduct() Edit Product ***", products);
             res.render('admin/edit-product', {
@@ -52,7 +52,8 @@ exports.getEditProduct = (req, res, next) => {
 
 //Admin Proudcts.
 exports.getProducts = (req, res, next) => {
-    Product.findAll()
+    req.user
+        .getProducts()
         .then(products => {
             console.log("getProducts(): Admin Products ***" + products);
             res.render('admin/products', {
