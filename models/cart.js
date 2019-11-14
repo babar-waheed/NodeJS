@@ -28,8 +28,11 @@ module.exports = class Cart{
                 cart.products[existingProductIndex] = updatedProduct;
                 console.log("Updated Existing: ", cart.products);
             }else{
+                console.log("A::", cart.products);
                 updatedProduct = {id: id, qty: 1}
+                console.log("B::", updatedProduct);
                 cart.products = [...cart.products, updatedProduct]
+                console.log("C::", cart.products);
             }
 
             cart.totalPrice = (cart.totalPrice + +productPrice)
@@ -47,6 +50,9 @@ module.exports = class Cart{
             if(err) throw err;
             const updatedCart = {...JSON.parse(fileContent)};
             const product = updatedCart.products.find(prod => prod.id === id);
+            if(!product){
+                return;
+            }
             const productQty = product.qty;
 
             console.log("updatedCart: ", updatedCart);
@@ -63,6 +69,18 @@ module.exports = class Cart{
 
         });
 
+    }
+
+    static getCart(cb){
+        fs.readFile(p, (err, fileContent) => {
+            const cart = JSON.parse(fileContent);
+            if(err){
+                cb(null)
+            }else{
+                cb(cart);
+            }
+         
+        });
     }
 
 }
