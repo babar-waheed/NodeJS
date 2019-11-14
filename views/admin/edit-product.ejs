@@ -16,7 +16,7 @@
 
         <div class="form-control">
             <label for="url">Image</label>
-            <input type="text" name="url" id="url" value="<% if(editing) { %><%= product.image %><% } %>">
+            <input type="text" name="url" id="url" value="<% if(editing) { %><%= product.imageUrl %><% } %>">
         </div>
 
         <div class="form-control">
@@ -26,7 +26,7 @@
 
         <div class="form-control">
             <label for="desc">Description</label>
-            <textarea name="desc" id="desc"><% if(editing) { %><%= product.desc %><% } %></textarea>
+            <textarea name="desc" id="desc"><% if(editing) { %><%= product.description %><% } %></textarea>
         </div>
 
         <% if(editing) { %>
