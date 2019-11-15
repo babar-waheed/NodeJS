@@ -23,102 +23,80 @@ exports.postAddProudct = (req, res, next) => {
     product
         .save()
         .then(result => { 
-            console.log(result)
-         //     console.log("Product Created ***");
+            console.log("CONTROLLER: postAddProudct()", result)
         res.redirect('/admin/products');
         })
-        .catch(err => {console.log(err)})
-
-
-    // req.user.createProduct({
-    //     title: req.body.title,
-    //     price: req.body.price,
-    //     description: req.body.desc,
-    //     imageUrl: req.body.url
-    // })
-    // .then(result => {
-    //     console.log("Product Created ***");
-    //     res.redirect('/admin/products');
-    // })
-    // .catch(err => {
-    //     console.log(err) 
-    // })
+        .catch(err => {console.log("CONTROLLER: postAddProudct()", err)})
 
 }
 
 //Edit Product CTA
-// exports.getEditProduct = (req, res, next) => {
+exports.getEditProduct = (req, res, next) => {
     
-//     const editMode = req.query.edit;
-//     const productId = req.params.productId;
+    const editMode = req.query.edit;
+    const productId = req.params.productId;
 
-//     req.user.getProducts({where: {id: productId}})
-//         .then(products =>{
-//             console.log("getEditProduct() Edit Product ***", products);
-//             res.render('admin/edit-product', {
-//                 title: "Edit Products!", 
-//                 path: "/admin/edit-product",
-//                 editing: editMode,
-//                 product: products[0]
-//             })
-//         })
-//         .catch(err => {
-//             console.log(err);
-//         })
-// }
+    Product.findById(productId)
+        .then(product =>{
+            console.log("CONTROLLER: getEditProduct()", product);
+            res.render('admin/edit-product', {
+                title: "Edit Products!", 
+                path: "/admin/edit-product",
+                editing: editMode,
+                product: product
+            })
+        })
+        .catch(err => {
+            console.log(err);
+        })
+}
 
 // //Admin Proudcts.
-// exports.getProducts = (req, res, next) => {
-//     req.user
-//         .getProducts()
-//         .then(products => {
-//             console.log("getProducts(): Admin Products ***" + products);
-//             res.render('admin/products', {
-//                 prods: products, 
-//                 title: 'Admin Products',  
-//                 path: "/admin/products", 
-//             });
-//         })
-//         .catch(err => {
-//             console.log(err);
-//         })
-// }
+exports.getProducts = (req, res, next) => {
+    Product.fetchAll()
+        .then(products => {
+            console.log("CONTROLLER: getProducts()", products);
+            res.render('admin/products', {
+                prods: products, 
+                title: 'Admin Products',  
+                path: "/admin/products", 
+            });
+        })
+        .catch(err => {
+            console.log("CONTROLLER: getProducts()", err);
+        })
+}
 
 // //Edit Proudct Update Query
-// exports.postEditProudct = (req, res, next) => {
+exports.postEditProudct = (req, res, next) => {
 
-//     const id = req.body.id;
-//     const title = req.body.title;
-//     const image = req.body.url;
-//     const price = req.body.price;
-//     const desc = req.body.desc;
+    const id = req.body.id;
+    const title = req.body.title;
+    const image = req.body.url;
+    const price = req.body.price;
+    const desc = req.body.desc;
 
-//     Product.findByPk(id)
-//         .then(product => {
-//             product.title = title;
-//             product.price = price;
-//             product.description = desc;
-//             product.imageUrl = image;
-//             return product.save();
-//         })
-//         .then(result => {
-//             console.log('UPDATED PRODUCT!');
-//             res.redirect('/admin/products');
-//         })
-//         .catch(err => console.log(err));
-// }
+    Product.findById(id)
+        .then(product => {
+            const ProductInstance = new Product(title, price, desc, image, id)
+            ProductInstance.save();
+        })
+        .then(result => {
+            console.log("CONTROLLER: postEditProduct()", "Updated....");
+            res.redirect('/admin/products');
+        })
+        .catch(err => console.log(err));
+}
 
 // //Delete Product
-// exports.postDeleteProudct = (req, res, next) => {
-//     const prodId = req.body.id;
-//     Product.findByPk(prodId)
-//       .then(product => {
-//         return product.destroy();
-//       })
-//       .then(result => {
-//         console.log('DESTROYED PRODUCT');
-//         res.redirect('/admin/products');
-//       })
-//       .catch(err => console.log(err));
-// }
+exports.postDeleteProudct = (req, res, next) => {
+    const prodId = req.body.id;
+    
+    Product.deleteById(prodId)
+      .then(() => {
+        console.log('CONTROLLER: postDeleteProudct', "DELETED!!!!!!");
+        res.redirect('/admin/products');
+      })
+      .catch(err => console.log(err));
+}
 
