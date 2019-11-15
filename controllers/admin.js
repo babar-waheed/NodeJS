@@ -18,7 +18,12 @@ exports.postAddProudct = (req, res, next) => {
     const description = req.body.desc;
     const imageUrl = req.body.url;
 
-    const product = new Product(title, price, description, imageUrl, null, req.user._id);
+    const product = new Product({
+        title: title,
+        price: price,
+        description: description,
+        imageUrl: imageUrl
+    });
 
     product
         .save()
@@ -53,7 +58,7 @@ exports.getEditProduct = (req, res, next) => {
 
 // //Admin Proudcts.
 exports.getProducts = (req, res, next) => {
-    Product.fetchAll()
+    Product.find()
         .then(products => {
             console.log("CONTROLLER: getProducts()", products);
             res.render('admin/products', {
@@ -78,8 +83,11 @@ exports.postEditProudct = (req, res, next) => {
 
     Product.findById(id)
         .then(product => {
-            const ProductInstance = new Product(title, price, desc, image, id)
-            ProductInstance.save();
+            product.title = title,
+            product.image = image,
+            product.price = price,
+            product.description = desc;
+            return product.save()
         })
         .then(result => {
             console.log("CONTROLLER: postEditProduct()", "Updated....");
@@ -90,9 +98,10 @@ exports.postEditProudct = (req, res, next) => {
 
 // //Delete Product
 exports.postDeleteProudct = (req, res, next) => {
+    
     const prodId = req.body.id;
     
-    Product.deleteById(prodId)
+    Product.findByIdAndDelete(prodId)
       .then(() => {
         console.log('CONTROLLER: postDeleteProudct', "DELETED!!!!!!");
         res.redirect('/admin/products');
