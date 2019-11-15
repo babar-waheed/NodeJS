@@ -20,7 +20,8 @@ app.use(express.static('public'));
 app.use((req, res, next) => {
     User.findById('5dce52b6acbd4d254fdbf6d6')
     .then(user => { 
-        req.user = user
+        req.user = new User(user.username, user.email, user.cart, user._id);
+        console.log("APPJS [USER] req.user: ", req.user); 
         console.log("APPJS [USER]: ", user); 
         next();
     })

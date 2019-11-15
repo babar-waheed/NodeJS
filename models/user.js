@@ -4,9 +4,11 @@ const getDb = require('../utils/database').getDb;
 const ObjectId = monogodb.ObjectId;
 
 class User{
-    constructor(username, email){
+    constructor(username, email, cart, id){
         this.username = username;
         this.email = email;
+        this.cart = cart;
+        this._id = id;
     }
 
     save(){
@@ -20,6 +22,33 @@ class User{
             .catch(err => {
                 console.log("MODEL User ERROR: save()", err);
             })
+
+    }
+
+    addToCart(product){
+
+        const db = getDb();
+        console.log("MODEL [USER] addToCart(product) product =>", product);
+        const updatedCart = { items: [{ productId: new ObjectId(product._id), quantity: 1}]}
+        console.log("MODEL [USER] addToCart(product) Updated Cart =>", updatedCart);
+
+        return db.collection('users')
+            .updateOne(
+                {_id: new ObjectId(this._id)},
+                {$set: { cart: updatedCart} }
+            )
+            .then(result => {
+                console.log("MODEL [USER] addToCart(product) result =>", result)
+            })
+            .catch(err => {
+                console.log("MODEL [USER] addToCart(product) err =>", err)
+            })
+      
+        // const cartProduct = this.cart.items.findIndex(cp => {
+        //     return cp._id === product.id
+        // });
+        
+        // const updatedCart = {items: []}
 
     }
 
