@@ -3,13 +3,15 @@ const getDb = require('../utils/database').getDb;
 
 class Product {
 
-    constructor(title, price, description, imageUrl, id){
+    constructor(title, price, description, imageUrl, id, userId){
 
+        console.log("MODEL [Product]: userID", userId)
         this.title = title;
         this.price = price;
         this.description = description;
         this.imageUrl = imageUrl;
         this._id =  id ? new mongodb.ObjectId(id) : null;
+        this.userId = userId;
     }
 
     save(){
@@ -30,27 +32,28 @@ class Product {
 
         return dbOp
         .then(result =>{
-            console.log("MODEL: save()", "Saved!!!!", " For ID: ", this._id);
+            console.log("MODEL Product: save()", "Saved!!!!", " For ID: ", this._id);
+            return result;
         })
         .catch(err => {
-            console.log("MODEL: save()", err)
+            console.log("MODEL Product: save()", err)
         })
 
     }
 
     static fetchAll(){
 
-        console.log("MODEL: fetchAll()");
+        console.log("MODEL Product: fetchAll()");
         const db = getDb();
         return db.collection('products')
         .find()
         .toArray()
         .then(products => {
-            console.log("MODEL: fetchAll()", products)
+            console.log("MODEL Product: fetchAll()", products)
             return products;
         })
         .catch(err => {
-            console.log("MODEL: fetchAll()", err);
+            console.log("MODEL Product: fetchAll()", err);
         })
     }
 
@@ -74,16 +77,16 @@ class Product {
 
     static deleteById(prodId){
 
-        console.log("MODEL: deleteById(prodId)", prodId);
+        console.log("MODEL Product: deleteById(prodId)", prodId);
 
         const db = getDb();
         return db.collection('products')
         .deleteOne({_id: new mongodb.ObjectId(prodId)})
         .then(result => {
-            console.log("MODEL: deleteById(prodId) ", result);
+            console.log("MODEL Product: deleteById(prodId) ", result);
         })
         .catch(err => {
-            console.log("MODEL: deleteById(prodId)", err);
+            console.log("MODEL Product: deleteById(prodId)", err);
         })
 
     }

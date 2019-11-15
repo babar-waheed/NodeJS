@@ -6,6 +6,7 @@ const errorController = require('./controllers/error');
  const adminRoutes = require('./routes/admin');
 //mongo 
 const mongoConnect = require('./utils/database').mongoConnect;
+const User = require('./models/user');
 
 const app = express();
 
@@ -17,21 +18,21 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static('public'));
 
 app.use((req, res, next) => {
-    // User.findByPk(1)
-    // .then(user => { 
-    //     req.user = user
-    //     next();
-    // })
-    // .catch(err => {
-    //     console.log(err);
-    // })
-    next();
+    User.findById('5dce52b6acbd4d254fdbf6d6')
+    .then(user => { 
+        req.user = user
+        console.log("APPJS [USER]: ", user); 
+        next();
+    })
+    .catch(err => {
+        console.log("APPJS [USER]: ", err); 
+    })
 });
 
 //routes
  app.use('/admin', adminRoutes);
  app.use(shopRoutes);
-// app.use(errorController.get404);
+ app.use(errorController.get404);
 
 mongoConnect(() => {
     app.listen(3000);

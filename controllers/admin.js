@@ -18,13 +18,13 @@ exports.postAddProudct = (req, res, next) => {
     const description = req.body.desc;
     const imageUrl = req.body.url;
 
-    const product = new Product(title, price, description, imageUrl);
+    const product = new Product(title, price, description, imageUrl, null, req.user._id);
 
     product
         .save()
         .then(result => { 
             console.log("CONTROLLER: postAddProudct()", result)
-        res.redirect('/admin/products');
+            res.redirect('/admin/products');
         })
         .catch(err => {console.log("CONTROLLER: postAddProudct()", err)})
 
