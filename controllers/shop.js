@@ -135,6 +135,7 @@ exports.postCartDeleteProduct = (req, res, next) => {
     })
 }
 
+//Post order & delete cart..
 exports.postOrder = (req, res, next) => {
 
     let fetchedCart;
@@ -163,7 +164,7 @@ exports.postOrder = (req, res, next) => {
     .catch(err => console.log(err));
 }
 
-//TODO
+//Get orders for order page
 exports.getOrders = (req, res, next) => {
 
     req.user.getOrders({include: ['products']})
