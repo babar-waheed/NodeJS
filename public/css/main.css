@@ -134,7 +134,8 @@ form {
   display: none;
 }
 
-main.center{
+main.center,
+.center{
   text-align: center;
 }
 
