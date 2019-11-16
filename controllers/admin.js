@@ -87,7 +87,7 @@ exports.postEditProudct = (req, res, next) => {
     Product.findById(id)
         .then(product => {
             product.title = title,
-            product.image = image,
+            product.imageUrl = image,
             product.price = price,
             product.description = desc;
             return product.save()
