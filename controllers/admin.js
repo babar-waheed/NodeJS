@@ -22,7 +22,8 @@ exports.postAddProudct = (req, res, next) => {
         title: title,
         price: price,
         description: description,
-        imageUrl: imageUrl
+        imageUrl: imageUrl,
+        userId: req.user
     });
 
     product
@@ -59,6 +60,8 @@ exports.getEditProduct = (req, res, next) => {
 // //Admin Proudcts.
 exports.getProducts = (req, res, next) => {
     Product.find()
+        //select('val1, val2, -val3')
+        //.populate('userId', 'val1, val2')
         .then(products => {
             console.log("CONTROLLER: getProducts()", products);
             res.render('admin/products', {

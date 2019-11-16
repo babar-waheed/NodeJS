@@ -56,19 +56,21 @@ exports.getProduct = (req, res, next) => {
 
 //View Cart
 exports.getCart = (req, res, next) => {
+
+    req.user.populate('cart.items.productId')
+        .execPopulate()
+        .then(user => {
+            console.log("CONTOLLER [SHOP]: getCart()", user.cart.items)
+            let products = user.cart.items;
+            res.render('shop/cart', { 
+                title: 'Your Cart',  
+                path: "/cart", 
+                products: products
+            })    
+        }) 
+
+    let products = req.user.cart.items;
     
-    let products = []
-    req.user.getCart()
-    .then(products => {
-        res.render('shop/cart', {
-            title: 'Your Cart',  
-            path: "/cart", 
-            products: products
-        })
-    })
-    .catch(err => {
-        console.log(err);
-    })       
 }
 
 //Post to cart.
