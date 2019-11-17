@@ -53,10 +53,10 @@ app.use("/images", express.static(path.join(__dirname, 'images')));
 app.use(
   session({
     secret: 'my secret', 
-    resave: false, 
-    saveUninitialized: false, 
+    resave: false,  
+    saveUninitialized: false,  
     store: store
-  })
+  }) 
 );
 app.use(csrf())
 app.use(flash());
