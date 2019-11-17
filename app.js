@@ -5,6 +5,8 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const mongoDBStore = require('connect-mongodb-session')(session);
+const flash = require('connect-flash');
+const csrf = require('csurf');
 
 const errorController = require('./controllers/error');
 const User = require('./models/user');
@@ -35,6 +37,8 @@ app.use(
     store: store
   })
 );
+app.use(csrf())
+app.use(flash());
 
 app.use((req, res, next) => {
   if(!req.session.user) return next();
@@ -48,6 +52,13 @@ app.use((req, res, next) => {
     })
 })
 
+app.use((req, res, next) => {
+  console.log("[USER LOGGED IN]??", req.session.isLoggedIn);
+  res.locals.isAuthenticated = req.session.isLoggedIn
+  res.locals.csrfToken = req.csrfToken()
+  next();
+})
+
 app.use('/admin', adminRoutes);
 app.use(shopRoutes);
 app.use(authRoutes);
@@ -57,18 +68,6 @@ app.use(errorController.get404);
 mongoose
 .connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(result => {
-    User.findOne().then(user => {
-      if (!user) {
-        const user = new User({
-          name: 'Babs',
-          email: 'babar.waheed@gmail.com',
-          cart: {
-            items: []
-          }
-        });
-        user.save();
-      }
-    });
     app.listen(3000);
   })
   .catch(err => {
