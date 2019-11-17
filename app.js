@@ -7,10 +7,11 @@ const session = require('express-session');
 const mongoDBStore = require('connect-mongodb-session')(session);
 const flash = require('connect-flash');
 const csrf = require('csurf');
-
 const errorController = require('./controllers/error');
 const User = require('./models/user');
-const USER_PASSWORD = require('./utils/password');
+const {USER_PASSWORD} = require('./utils/password');
+
+console.log(USER_PASSWORD);
 
 const MONGODB_URI = `mongodb+srv://${USER_PASSWORD}@nodejs-47ykt.mongodb.net/shop`
 
