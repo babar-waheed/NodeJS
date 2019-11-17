@@ -11,8 +11,6 @@ const errorController = require('./controllers/error');
 const User = require('./models/user');
 const {USER_PASSWORD} = require('./utils/password');
 
-console.log(USER_PASSWORD);
-
 const MONGODB_URI = `mongodb+srv://${USER_PASSWORD}@nodejs-47ykt.mongodb.net/shop`
 
 const app = express();
